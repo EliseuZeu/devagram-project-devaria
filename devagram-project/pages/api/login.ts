@@ -1,9 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next"; // Importando Request e Response
+import {conectarMongoDB} from '../../middlewares/conectarMongoDB'
+import type { respostasPadraoMsg } from "@/types/respostasPadraoMsg";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (
+const endpointLogin = (
     req : NextApiRequest, 
-    res : NextApiResponse
+    res : NextApiResponse<respostasPadraoMsg>
 ) => {
     if(req.method === "POST") {  // Chamando meu metodo post 
         const {login, senha} = req.body; // recebendo meu body da req
@@ -15,6 +17,8 @@ export default (
     }
     return res.status(405).json({error : 'Metodod informado nao e valido'}); // rotornando erro caso a pagina nao seja encontrada
 }
+
+export default conectarMongoDB(endpointLogin);
 
 
 
